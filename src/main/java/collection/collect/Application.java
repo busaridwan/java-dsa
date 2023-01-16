@@ -4,6 +4,9 @@ import collection.collect.interfaceExample.Contract;
 import collection.collect.interfaceExample.Implementation;
 
 import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class Application {
     public static void main(String[] args) {
@@ -31,11 +34,44 @@ public class Application {
         while (iterator.hasNext()){
             System.out.println(iterator.next().getName());
         }
+    lagos.setPetFriendly(true);
 
-        for (Room room : roomz) {
-            
+
+    Collection<Room> removeRooms = new ArrayList<>();
+
+        for (Room room : rooms) {
+            if (room.isPetFriendly()){
+                removeRooms.add(room);
+            }
         }
 
+        rooms.removeAll(removeRooms);
+
+        while (iterator.hasNext()){
+            Room room = iterator.next();
+
+        }
+        // ::: USING STREAM
+        rooms.stream()
+                .filter(new Predicate<Room>() {
+                    @Override
+                    public boolean test(Room room) {
+                        return room.isPetFriendly();
+                    }
+                }).forEach(new Consumer<Room>() {
+                    @Override
+                    public void accept(Room room) {
+                        System.out.println(room.getName());
+                    }
+                });
+
+        // ::: USING LAMBDA
+        rooms.stream().filter(room -> room.isPetFriendly()).forEach(room -> System.out.println(room.getName()));
+        // ::: METHOD REFERENCE
+        rooms.stream().filter(Room::isPetFriendly).forEach(room -> System.out.println(room.getName()));
+        // ::: COLLECTION AS LIST
+        Collection<Room> petFriendlyRooms = rooms.stream().filter(Room::isPetFriendly).collect(Collectors.toList());
+        petFriendlyRooms.stream().map(r -> r.getName()).forEach(System.out::println);
 
     }
 //    static double getPotentialRevenue(Room room1, Room room2){

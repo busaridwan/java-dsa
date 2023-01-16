@@ -6,6 +6,15 @@ public class Room {
     private String type;
     private int capacity;
     private double rate;
+    private boolean isPetFriendly;
+
+    public boolean isPetFriendly() {
+        return isPetFriendly;
+    }
+
+    public void setPetFriendly(boolean petFriendly) {
+        isPetFriendly = petFriendly;
+    }
 
     public Room(String name, String type, int capacity, double rate) {
         this.name = name;
